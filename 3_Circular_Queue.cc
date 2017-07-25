@@ -56,10 +56,11 @@ int queue::front(){
 
 int queue::back(){
 	//if(rear!=_front) return member[rear-1];     //error 考虑元素不断pop,push后，rear==0时,rear-1成为负数
-	if(rear!=_front){    //元素不为空
+	/*if(rear!=_front){    //元素不为空
 		if(rear==0) return member[MaxSize-1];
 		else return member[rear-1];
-	}
+	}*/
+	if(rear!=_front) return member[(rear-1+MaxSize)%MaxSize];         //更加优雅
 }
 
 bool queue::empty(){
