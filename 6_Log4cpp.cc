@@ -2,7 +2,7 @@
 //g++ log4cpp.cc  -llog4cpp -lpthread  -std=c++11
 
 //单例模式下的log4cpp简单封装
-//log4cpp PatternLayout(定义输出格式) FileAppender(定义输出文件形式)  Category(日志种类)
+//log4cpp PatternLayout(定义输出格式) FileAppender(定义输出文件形式)  Category(日志种类),add 各种类型appender
 
 #include <log4cpp/Category.hh>
 #include <log4cpp/Priority.hh>
@@ -51,7 +51,7 @@ Mylog4cpp::Mylog4cpp()
 	_ptnLyout->setConversionPattern("%d{%Y/%m/%d %H:%M:%S} [%5p] :%m%n");             //PatternLayout定义布局格式 
 	_rollingFileAppender->setLayout(_ptnLyout);
 	
-	_root.addAppender(_rollingFileAppender);
+	_root.addAppender(_rollingFileAppender);   //可以多次add不同类型的appender 实现向不同流输出
 	_root.setPriority(Priority::DEBUG);
 }
 
