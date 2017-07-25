@@ -10,6 +10,8 @@ using std::ifstream;
 using std::ofstream;
 using std::string;
 using std::map;
+//统计 the holy bible文件的词频
+// map key value保存,并对于空格符分离的字符串进行 去除标点、转为小写、去除数字等等操作
 
 class WordStatistic
 {

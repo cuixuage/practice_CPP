@@ -4,7 +4,7 @@ using std::cout;
 using std::endl;
 //主要作用:用来替换全局变量
 //构造函数 析构函数都设置为private
-
+//单实例最终会自动释放销毁
 
 class singleton{
 private:
