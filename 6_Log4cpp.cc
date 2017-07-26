@@ -35,7 +35,7 @@ public:
 private:
 	PatternLayout * _ptnLyout;             //布局
 	RollingFileAppender * _rollingFileAppender;   //fileappender
-	Category & _root;
+	Category & _root;                   //引用避免了再次复制root对象
 private:
 	static Mylog4cpp * _instance;
 	Mylog4cpp();
