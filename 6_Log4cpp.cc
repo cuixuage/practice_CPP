@@ -33,8 +33,6 @@ public:
 	void logWarn (const string & Message);
 	void logDebug(const string & Message);
 private:
-	PatternLayout * _ptnLyout;             //布局
-	RollingFileAppender * _rollingFileAppender;   //fileappender
 	Category & _root;                   //引用避免了再次复制root对象
 private:
 	static Mylog4cpp * _instance;
@@ -44,11 +42,11 @@ private:
 Mylog4cpp * Mylog4cpp::_instance=NULL;          //静态成员类外初始化
 
 Mylog4cpp::Mylog4cpp()
-:_ptnLyout(new PatternLayout())
-,_rollingFileAppender(new RollingFileAppender("rollingFileAppender", RollingFileName,5 * 1024,2) )   //设置回卷格式fileappender
-,_root(Category::getRoot())
+:_root(Category::getRoot())
 {
+	PatternLayout * _ptnLyout = new PatternLayout();
 	_ptnLyout->setConversionPattern("%d{%Y/%m/%d %H:%M:%S} [%5p] :%m%n");             //PatternLayout定义布局格式 
+	RollingFileAppender * _rollingFileAppender = new RollingFileAppender("rollingFileAppender", RollingFileName,5 * 1024,2) ; //设置回卷格式fileappender
 	_rollingFileAppender->setLayout(_ptnLyout);
 	
 	_root.addAppender(_rollingFileAppender);   //可以多次add不同类型的appender 实现向不同流输出
@@ -109,7 +107,7 @@ int main(void)
 	cout<<"addr1: "<< mylog4cpp3<<endl;
 	cout<<"addr1: "<< mylog4cpp4<<endl;
 	
-	for(size_t idx = 0; idx != 100; ++idx)
+	for(size_t idx = 0; idx != 10; ++idx)
 	{
 		ostringstream oss;
 		oss <<"  "<<__FUNCTION__<<".";
