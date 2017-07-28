@@ -5,8 +5,6 @@
 	Proxy 模式区别operator[]运算符的write(引用计数自减) , read情况  ————Effective C++
 */
 
-
-
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
