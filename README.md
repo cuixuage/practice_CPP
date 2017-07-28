@@ -12,5 +12,5 @@
 **6.Log4cpp.cc**  
 日志C++库 log4cpp的layout fileappender category的使用 -llog4cpp -lpthread  
 **7.StringOperator.cc**   
-//实现Stinrg 类中 构造函数、运算符= += == != > < >= <=、输入输出流istream ostream的重载  
+实现Stinrg 类中 构造函数、运算符= += == != > < >= <=、输入输出流istream ostream的重载  
 
