@@ -98,7 +98,7 @@ std::ostream & operator<< (std::ostream & os,const String &rhs){
 class String::CharProxy{
 public:
 	CharProxy(String &, int );
-	CharProxy & operator=(const char);
+	CharProxy & operator=(const char &);
 	friend std::ostream& operator<<(std::ostream &os, const CharProxy &rhs)
     {
         return os << rhs._mystr.c_str()[rhs._idx];    //避免 _mystr[idx]递归;
@@ -114,24 +114,19 @@ String::CharProxy::CharProxy(String & mystr, int idx)
     cout<<"String::CharProxy::CharProxy(String & mystr, int idx)() ok"<<endl;
 }
 
-String::CharProxy & String::CharProxy::operator=(const char c){
+String::CharProxy & String::CharProxy::operator=(const char & c){
 	if(_idx < _mystr.size()){
 		if(_mystr.refcount()>1){          //待更新的str多个引用时
 			_mystr.decreaseRefcount();
 			char * ptmp = new char[_mystr.size()+2];
 			strcpy(ptmp,_mystr._pstr);
-			ptmp[_idx]=c;       		//写更新
+    		
 			_mystr._pstr=ptmp;          //浅拷贝,同一块堆区
 			_mystr.initRefcount();
 		}
-		return (*this);
+		_mystr._pstr[_idx]=c;  //写更新
 	}
-	else{
-		String str;
-		static CharProxy nullchar(str,0);
-		cout<< "Proxy 越界" << endl;
-		return nullchar;
-	}
+	return (*this);
 }
 
 //保证CharProxy定义complete  string operator需要在最后
