@@ -39,7 +39,7 @@ public:
 			delete _pInstance;
 	}
 private:
-	Singleton(){	cout << "Singleton()" << endl;	}
+	Singleton(){	cout << "Singleton()" << endl;	}  //首先保证:构造函数private; 避免类外直接构造
 	~Singleton(){	cout << "~Singleton()" << endl;	}
 private:
 	static Singleton * _pInstance;
