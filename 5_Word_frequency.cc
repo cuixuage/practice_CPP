@@ -61,7 +61,7 @@ bool WordStatistic::isAllDigit(const std::string &s)
 void WordStatistic::readFile(const std::string filename){
     ifstream ifs(filename.c_str());               
     string  temp; 
-	while(ifs>>temp){
+	while(ifs>>temp){    //getline(ifs,temp) 每次读取一行
 		erasePunct(temp);         //去除标点
 		stringToLower(temp);      //转为小写
 		if(isAllDigit(temp))      //去除数字
@@ -87,4 +87,5 @@ int main(int ac,char** av){
 	wd.writeFile(outputfilename);
 	return 0;
 }
-		
+	
+
