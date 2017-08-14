@@ -17,4 +17,16 @@
 **8.String_COW_WriteAndRead.cc**   
 String 类Copy_On_Write 技术实现： 申请堆空间时而外申请sizeof(cahr)大小空间用于保存引用计数值    
 Proxy 模式区别operator[]运算符的write(引用计数自减) , read情况  ————Effective C++    
+**9.HeapSort_Template.cc**   
+堆排序的模版类，使用compare函数对象或重载operator()大顶堆小顶堆   
+**10.bind_BasicUse.cc**  
+std::bind与std::function 基本使用,可以作为多态使用  
+**11.Vector_allocator.cc**  
+使用空间分配allocator接口类完成自定义的Vecotr   
+**12.String_rightValue.cc**  
+String移动语义,&&右值传递避免临时对象的产生  
+**13.Figure_Virtual.cc**  
+继承+虚函数实现图形计算公用函数的多态性   
+**14.Figure_Bind.cc**  
+std::bind+std::function实现图形计算公用函数的多态性   
 
