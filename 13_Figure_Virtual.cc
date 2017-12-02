@@ -82,7 +82,7 @@ private:
 	float _fc;
 };
 
-void display(Figure & fig)
+void display(Figure & fig)				//虽然类型是基类  但是多态根据对象内容执行不同的虚函数
 {
 	fig.display();
 	cout << fig.area() << endl;
