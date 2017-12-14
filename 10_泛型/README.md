@@ -14,3 +14,6 @@ for_each find erase+remove sort+unique+erase
 
 **函数适配器**  
 bind    
+得到一个新的可调用对象  
+注：  
+占位符; 实际调用对象默认是值传递，拷贝对象。如果需要地址传递，需要ref或者cref函数  
