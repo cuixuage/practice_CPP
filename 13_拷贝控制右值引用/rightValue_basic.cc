@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-//复制语义  形参 const T &
+//复制语义  形参 const T &(思考: 为什么传递引用？ 避免递归调用)
 //移动语义  形参 T &&       (往往加上 noexcept)
 //区别:拷贝构造函数/移动构造函数   拷贝赋值运算符/移动赋值运算符
 
