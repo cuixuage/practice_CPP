@@ -101,7 +101,7 @@ B::b()
 B::c()
 B::d()
 
-pC = 0x7ffdff8ed930
+pC = 0x7ffdff8ed930			//怎么解释？？
 C::a()
 C::c()
 C::d()

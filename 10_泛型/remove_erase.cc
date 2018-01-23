@@ -108,7 +108,7 @@ int main()
     std::string str2 = "Text\n with\tsome \t  whitespaces\n\n";
     str2.erase(std::remove_if(str2.begin(), 
                               str2.end(),
-                              [](char x){return std::isspace(x);}),
+                              [](char x){return std::isspace(x);}),			//remove_if 第三个参数是函数
                str2.end());
     std::cout << str2 << '\n';
 }

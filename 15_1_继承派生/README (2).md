@@ -13,7 +13,7 @@
 	Base & operator=(const Base & rhs)   
 	{  
 		cout << "Base & operator=(const Base&)" << endl;   
-		if(this != &rhs)   
+		if(this != &rhs)  		//思考； 拷贝构造函数或者拷贝赋值操作符 传递引用&参数的作用 
 		{  
 			delete [] _pdata1;  
 			_pdata1 = new char[strlen(rhs._pdata1) + 1]();   

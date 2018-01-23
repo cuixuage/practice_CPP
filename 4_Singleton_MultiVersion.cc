@@ -159,4 +159,10 @@ int main(void)
 	return 0;
 }
 
+
+
+/* 思考:
+1.如何保证单例？ 首先构造函数private处理.。这样只能够在
+2.为何使用static？ 因为最开始无法直接new对象，只能通过class::func访问静态成员函数 
+*/
 	
