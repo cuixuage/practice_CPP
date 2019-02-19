@@ -1,8 +1,6 @@
-
-//ÊµÏÖStinrg ÀàÖĞ ¹¹Ôìº¯Êı¡¢ÔËËã·û= += == != > < >= <=¡¢ÊäÈëÊä³öÁ÷istream ostreamµÄÖØÔØ
+//å®ç°Stinrg ç±»ä¸­ æ„é€ å‡½æ•°ã€è¿ç®—ç¬¦= += == != > < >= <=ã€è¾“å…¥è¾“å‡ºæµistream ostreamçš„é‡è½½
 
 #include <iostream>
-//#include <String>    //²»¼ÓÈë´ËÍ·ÎÄ¼ş
 #include <string.h>
 #include <stdio.h>
 using std::cout;
@@ -22,7 +20,7 @@ public:
 	String &operator+=(const char *);
 
 	char &operator[](std::size_t index);
-	const char &operator[](std::size_t index) const;          //const¶ÔÏóÖ»ÄÜµ÷ÓÃconst³ÉÔ±º¯Êı;ÆÕÍ¨¶ÔÏó¾ùÄÜµ÷ÓÃ
+	const char &operator[](std::size_t index) const;         
 
 	std::size_t size() const;
 	const char* c_str() const;
@@ -68,8 +66,8 @@ String::~String(){
 	delete [] _pstr;
 }
 
-String & String::operator=(const String &rhs){
-	if(this != &rhs){        //±ÜÃâ×Ô¸´ÖÆÎÊÌâ ×óÓÒ¾ùÎªÖ¸Õë
+String & String::operator=(const String &rhs){	//assignment èµ‹å€¼è¿ç®—ç¬¦é‡è½½(å‰æ:å·¦å€¼å¯¹è±¡å·²å­˜åœ¨)
+	if(this != &rhs){
 		delete [] _pstr;
 		_pstr=new char [strlen(rhs._pstr)+1];
 		strcpy(_pstr,rhs._pstr);
@@ -78,7 +76,7 @@ String & String::operator=(const String &rhs){
 }
 	
 String & String::operator=(const char * pstr){
-	if(!strcmp(this->_pstr,pstr)){         //ÅĞ¶Ï×Ö·û´®ÄÚÈİÊÇ·ñÏàÍ¬;pstrÔÚÎÄ×Ö³£Á¿Çø,_pstrÔÚÕ»Çø,Ê×µØÖ·¿Ï¶¨²»ÏàÍ¬
+	if(!strcmp(this->_pstr,pstr)){         //åˆ¤æ–­å­—ç¬¦ä¸²å†…å®¹æ˜¯å¦ç›¸åŒ;pstråœ¨æ–‡å­—å¸¸é‡åŒº,_pstråœ¨æ ˆåŒº,é¦–åœ°å€è‚¯å®šä¸ç›¸åŒ
 		delete [] _pstr;
 		_pstr=new char [strlen(pstr)+1];
 		strcpy(_pstr,pstr);
@@ -116,10 +114,10 @@ char & String::operator[](std::size_t index){
 		return _pstr[index];
 	}
 	return nullchar;
-	//return '\0';     //ÒıÓÃ²»Òª·µ»Ø¾Ö²¿±äÁ¿
+	//return '\0';     //å¼•ç”¨ä¸è¦è¿”å›å±€éƒ¨å˜é‡
 }
 
-const char & String::operator[](std::size_t index) const{          //const¶ÔÏóÖ»ÄÜµ÷ÓÃconst³ÉÔ±º¯Êı;ÆÕÍ¨¶ÔÏó¾ùÄÜµ÷ÓÃ
+const char & String::operator[](std::size_t index) const{           //constå¯¹è±¡åªèƒ½è°ƒç”¨constæˆå‘˜å‡½æ•°;æ™®é€šå¯¹è±¡å‡èƒ½è°ƒç”¨const,éconstæˆå‘˜å‡½æ•°
 	static char nullchar = '\0';
 	if(index>=0 && index<strlen(_pstr)){
 		return _pstr[index];
@@ -133,10 +131,10 @@ std::size_t String::size() const{
 }
 
 const char* String::c_str() const{
-	return _pstr;                    //·µ»Øchar* 
+	return _pstr;                    //è¿”å›char* 
 }
 
-//AÀàµÄÓÑÔªº¯Êı ÄÜÖ±½Ó·ÃÎÊAÀàµÄprivate³ÉÔ±±äÁ¿
+//Aç±»çš„å‹å…ƒå‡½æ•° èƒ½ç›´æ¥è®¿é—®Aç±»çš„privateæˆå‘˜å˜é‡
 
 bool operator==(const String &left, const String &right){
 	return !strcmp(left._pstr,right._pstr);
@@ -162,7 +160,7 @@ bool operator>=(const String &left, const String &right){
 	return strcmp(left._pstr,right._pstr)>=0?true:false;
 }
 
-std::ostream &operator<<(std::ostream &os, const String &rhs){       //¶ÔÓÚStringÀà Êä³öÁ÷ÖØÔØ
+std::ostream &operator<<(std::ostream &os, const String &rhs){       //å¯¹äºStringç±» è¾“å‡ºæµé‡è½½
 	os << rhs._pstr<<endl;
 	return os;
 }
@@ -180,25 +178,25 @@ std::istream &operator>>(std::istream &is, String &rhs){
 	String operator+(const char *, const String &);
 String operator+(const String &left, const String &right){   //String += String
 	String temp1(left);
-	String temp2(right);    //³õÊ¼»¯Á½¸öÊµÀı
+	String temp2(right);    //åˆå§‹åŒ–ä¸¤ä¸ªå®ä¾‹
 	temp1 +=temp2;
-	return temp1;           //·µ»ØString ¶ÔÏó
+	return temp1;           //è¿”å›String å¯¹è±¡
 }
 String operator+(const String &left, const char *right){    //String += char*
 	String temp1(left);
 	//String temp2(right);    
 	temp1 +=right;
-	return temp1;           //·µ»ØString ¶ÔÏó
+	return temp1;           //è¿”å›String å¯¹è±¡
 }
-String operator+(const char *left, const String &right){     //ÒªÇó leftÔÚÇ°
+String operator+(const char *left, const String &right){     //è¦æ±‚ leftåœ¨å‰
 	String temp1(left);
 	String temp2(right);    
 	temp1 +=temp2;
-	return temp1;           //·µ»ØString ¶ÔÏó
+	return temp1;           //è¿”å›String å¯¹è±¡
 }	
 	
 int main(int argc,char ** argv){
-	//**********************¹¹Ôìº¯Êı²âÊÔ
+	//**********************æ„é€ å‡½æ•°æµ‹è¯•
 	String str1;
     String str2("hello,world");
 	String str3(str2);
@@ -207,7 +205,7 @@ int main(int argc,char ** argv){
 	cout<<str3;
 	cout<< String("---------------------");
 	
-	//***********************  = ÔËËã·û²âÊÔ
+	//***********************  = è¿ç®—ç¬¦æµ‹è¯•
 	const char *pstr="hello,world,cui";
 	String str4=pstr;
 	String str5=str4;
@@ -215,7 +213,7 @@ int main(int argc,char ** argv){
 	cout<<str5;
 	cout<< String("---------------------");
 	
-	//********************** += ÔËËã·û²âÊÔ
+	//********************** += è¿ç®—ç¬¦æµ‹è¯•
 	String str6("hello,");
 	str6 +=str6;
 	cout<<str6;
@@ -223,19 +221,19 @@ int main(int argc,char ** argv){
 	cout<<str6;
 	cout<< String("---------------------");
 
-	//********************** [] ÔËËã·û²âÊÔ
+	//********************** [] è¿ç®—ç¬¦æµ‹è¯•
 	String str7("Hello");
     const String str8("CUIXUANGE");
-	cout<<str7[0]<<endl;             //µ¥¸ö×Ö·ûÊä³ö²»»áµ÷ÓÃ ÖØÔØµÄstringÊä³ö;  ¶îÍâ¼ÓÉÏ»»ĞĞ·û
+	cout<<str7[0]<<endl;             //å•ä¸ªå­—ç¬¦è¾“å‡ºä¸ä¼šè°ƒç”¨ é‡è½½çš„stringè¾“å‡º;  é¢å¤–åŠ ä¸Šæ¢è¡Œç¬¦
 	cout<<str8[8]<<endl;
 	cout<< String("---------------------");
 	
-	//********************** size c_str º¯Êı²âÊÔ
+	//********************** size c_str å‡½æ•°æµ‹è¯•
     cout << "size():"<<str8.size()<<endl;
 	cout<<str8.c_str()<<endl;
 	cout<< String("---------------------");
 	
-	//********************** == != > < >= <= ÔËËã·û²âÊÔ
+	//********************** == != > < >= <= è¿ç®—ç¬¦æµ‹è¯•
 	String str9="hello";
 	String str10="Hello";
 	cout<<"NOTE: true is 1 ; false is 0"<<endl;
@@ -247,14 +245,14 @@ int main(int argc,char ** argv){
 	cout<<"<=? "<<(str9<=str10)<<endl;
 	cout<< String("---------------------");
 	
-	//********************** << >>ÔËËã·û²âÊÔ 
+	//********************** << >>è¿ç®—ç¬¦æµ‹è¯• 
 	String str11;
 	cout<<"input something...."<<endl;
 	cin>>str11;
 	cout<<"cin:"<<str11;
-	cout<< String("---------------------");   //²âÊÔ << Á÷
+	cout<< String("---------------------");   //æµ‹è¯• << æµ
 	
-	//********************** + ÔËËã·û²âÊÔ 
+	//********************** + è¿ç®—ç¬¦æµ‹è¯• 
 	String str12;
 	String str13("hello");
 	String str14(",world");
@@ -269,28 +267,44 @@ int main(int argc,char ** argv){
 	return 0;
 }
 /*
-1.ÓÑÔªº¯Êı
-ÓĞÈıÖÖÀàĞÍ ×ÔÓÉº¯Êı£¬ÆäËûÀàµÄ³ÉÔ±º¯Êı, ÓÑÔªÀà ¡£ ±»¶¨ÒåµÄÓÑÔªÄÚÈİ ÄÜ¹»Ö±½Ó·ÃÎÊµ±Ç°ÀàµÄprivate Ë½ÓĞ³ÉÔ±±äÁ¿
-
-2.ÔËËã·ûÖØÔØÔ­Ôò
-²Ù×÷Êı±ØĞëÎªÓÃ»§×Ô¶¨ÒåµÄÀà¡¢Ã¶¾ÙÀà£»ÓÅÏÈĞÔ¡¢½áºÏĞÔÊÇ¹Ì¶¨µÄ£»Ò»°ã²»ÖØÔØ && || µÈÂß¼­ÔËËã·û
-
-3.²»ÄÜÖØÔØµÄÔËËã·û
-³ÉÔ±·ÃÎÊ·û .     ³ÉÔ±Ö¸Õë·ÃÎÊÔËËã·û .*    ÓòÔËËã·û ::   ³¤¶ÈÔËËã·û sizeof	    Ìõ¼şÔËËã·ûºÅ ?:
-
-4.ÔËËã·ûÖØÔØĞÎÊ½
-×ÔÓÉº¯ÊıÖØÔØoperator  ÀıÈç + £¬-¡£·µ»ØÒ»¸öĞÂµÄÊµÀı 
-ÓÑÔªº¯ÊıÖØÔØoperator   ÄÜ·ÃÎÊÀàË½ÓĞ³ÉÔ±
-³ÉÔ±º¯ÊıÖØÔØoperator  ÀıÈç ++ += ¡£·µ»ØÒ»¸öÊµÀıµÄÒıÓÃ,ÒòÎª×óÖµÒ»°ãÒÑ¾­´æÔÚ,±ÜÃâ·µ»ØĞÂÊµÀı Ç³¿½±´³ö´í¡¢ Ò²Ìá¸ßÁËĞ§ÂÊ
-
-5.Ç°ÖÃ++ ºóÖÃ++Çø±ğ
-Ç°ÖÃ++ ·µ»ØthisµÄÒıÓÃ   ;   ºóÖÃ++ ·µ»ØthisµÄ¸´ÖÆ¶ÔÏó
-Ç°ÖÃ++ ÔÚÈİÆ÷µÄµü´úÆ÷ÖĞÊ¹ÓÃÄÜÌá¸ßÊ¹ÓÃĞ§ÂÊ
-Ç°ÖÃ++ºÍºóÖÃ++²ÎÊıºÍ·µ»ØÖµÀàĞÍ²»Í¬
-ºóÖÃ++ÓĞÒ»¸ö(int)ÀàĞÍ²ÎÊı£¬µ÷ÓÃÊ±±àÒëÆ÷´«µİÒ»¸ö0×÷Îª¸Ã(int)µÄÖµ
-
+1.å‹å…ƒå‡½æ•°
+æœ‰ä¸‰ç§ç±»å‹ è‡ªç”±å‡½æ•°ï¼Œå…¶ä»–ç±»çš„æˆå‘˜å‡½æ•°, å‹å…ƒç±» ã€‚ è¢«å®šä¹‰çš„å‹å…ƒå†…å®¹ èƒ½å¤Ÿç›´æ¥è®¿é—®å½“å‰ç±»çš„private ç§æœ‰æˆå‘˜å˜é‡
+2.è¿ç®—ç¬¦é‡è½½åŸåˆ™
+æ“ä½œæ•°å¿…é¡»ä¸ºç”¨æˆ·è‡ªå®šä¹‰çš„ç±»ã€æšä¸¾ç±»ï¼›ä¼˜å…ˆæ€§ã€ç»“åˆæ€§æ˜¯å›ºå®šçš„ï¼›ä¸€èˆ¬ä¸é‡è½½ && || ç­‰é€»è¾‘è¿ç®—ç¬¦
+3.ä¸èƒ½é‡è½½çš„è¿ç®—ç¬¦
+æˆå‘˜è®¿é—®ç¬¦ .     æˆå‘˜æŒ‡é’ˆè®¿é—®è¿ç®—ç¬¦ .*    åŸŸè¿ç®—ç¬¦ ::   é•¿åº¦è¿ç®—ç¬¦ sizeof	    æ¡ä»¶è¿ç®—ç¬¦å· ?:
+4.è¿ç®—ç¬¦é‡è½½å½¢å¼
+è‡ªç”±å‡½æ•°é‡è½½operator  ä¾‹å¦‚ + ï¼Œ-ã€‚è¿”å›ä¸€ä¸ªæ–°çš„å®ä¾‹ 
+å‹å…ƒå‡½æ•°é‡è½½operator   èƒ½è®¿é—®ç±»ç§æœ‰æˆå‘˜
+æˆå‘˜å‡½æ•°é‡è½½operator  ä¾‹å¦‚ ++ += ã€‚è¿”å›ä¸€ä¸ªå®ä¾‹çš„å¼•ç”¨,å› ä¸ºå·¦å€¼ä¸€èˆ¬å·²ç»å­˜åœ¨,é¿å…è¿”å›æ–°å®ä¾‹ æµ…æ‹·è´å‡ºé”™ã€ ä¹Ÿæé«˜äº†æ•ˆç‡
+5.å‰ç½®++ åç½®++åŒºåˆ«
+å‰ç½®++ è¿”å›thisçš„å¼•ç”¨   ;   åç½®++ è¿”å›thisçš„å¤åˆ¶å¯¹è±¡
+å‰ç½®++ åœ¨å®¹å™¨çš„è¿­ä»£å™¨ä¸­ä½¿ç”¨èƒ½æé«˜ä½¿ç”¨æ•ˆç‡
+å‰ç½®++å’Œåç½®++å‚æ•°å’Œè¿”å›å€¼ç±»å‹ä¸åŒ
+åç½®++æœ‰ä¸€ä¸ª(int)ç±»å‹å‚æ•°ï¼Œè°ƒç”¨æ—¶ç¼–è¯‘å™¨ä¼ é€’ä¸€ä¸ª0ä½œä¸ºè¯¥(int)çš„å€¼
 //  http://blog.csdn.net/randyjiawenjie/article/details/6747720
-	·µ»ØÀàĞÍ²»Í¬
-	ĞÎ²Î²»Í¬
-	Ğ§ÂÊ²»Í¬
+	è¿”å›ç±»å‹ä¸åŒ
+	å½¢å‚ä¸åŒ
+	æ•ˆç‡ä¸åŒ
 */
+
+/*
+1.constå…³é”®å­—
+1.1constæ”¾åœ¨å‡½æ•°å‰é¢,è¿”å›å€¼ç±»å‹æ˜¯const; 
+1.2constæ”¾åœ¨å‡½æ•°å£°æ˜åé¢,åˆ™è¯¥å‡½æ•°ä¸å…è®¸ä¿®æ”¹ç±»çš„æ•°æ®æˆå‘˜,ä¸èƒ½é€šè¿‡æ­¤å‡½æ•°æ›´æ”¹ç±»çš„public,private,protectedå˜é‡
+1.3
+åº”å°½å¯èƒ½å°†è¯¥æˆå‘˜å‡½æ•°å£°æ˜ä¸ºconstæˆå‘˜å‡½æ•°
+constæˆå‘˜å‡½æ•°å¯ä»¥è¢«å…·æœ‰ç›¸åŒå‚æ•°åˆ—è¡¨çš„éconstæˆå‘˜å‡½æ•°é‡è½½ï¼Œä¾‹å¦‚ï¼Œ
+class Screen {
+public:
+char get(int x,int y);
+char get(int x,int y) const;
+};
+æ­¤æ—¶,ç±»å¯¹è±¡çš„å¸¸é‡æ€§å†³å®šè°ƒç”¨å“ªä¸ªå‡½æ•°.éconstç±»å¯¹è±¡è°ƒç”¨éconstæˆå‘˜å‡½æ•°
+
+2.static/const å…³é”®å­—ï¼Ÿ
+https://blog.csdn.net/tobefxz/article/details/14109697
+2.1 åˆå§‹åŒ–æ–¹å¼ä¸åŒï¼Ÿç›´æ¥åˆå§‹åŒ– / æ„é€ å‡½æ•°çš„åˆå§‹åŒ–åˆ—è¡¨
+2.2 ä½œç”¨èŒƒå›´ä¸åŒï¼Ÿ æ‰€æœ‰å¯¹è±¡ / å¯¹è±¡ç§æœ‰
+2.3 "static const" é™æ€å¸¸é‡çš„å†™æ³•
+2.4 staticå…¨å±€å˜é‡åªåœ¨å½“å‰æºæ–‡ä»¶ä¸‹æœ‰æ•ˆ; å…¨å±€å˜é‡åœ¨æ‰€æœ‰çš„æºæ–‡ä»¶ä¸‹æœ‰æ•ˆã€‚

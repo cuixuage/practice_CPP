@@ -10,7 +10,7 @@ using std::endl;
 class Figure
 {
 public:
-	virtual void display() const=0;
+	virtual void display() const=0;	//=0是纯虚函数; const表示不修改数据成员
 	virtual float area()=0;
 };
 
@@ -102,3 +102,9 @@ int main(void)
 
 
 
+/*
+1.纯虚函数的基类只能被继承 不能实例化
+2.多态目的:
+通过基类引用或者指针 访问子类的函数(哪个子类调用此func 访问那个子类)
+2.1 动态绑定,不同对象调用 指向不同的虚函数
+2.2 通过基类的引用或指针 作为形参

@@ -1,11 +1,16 @@
 #include <iostream>
-#include <string.h>    //°üº¬¶ÔÓÚ×Ö·û´®µÄ´¦Àíº¯Êı
+#include <string.h>    //åŒ…å«å¯¹äºå­—ç¬¦ä¸²çš„å¤„ç†å‡½æ•°
 using std::cout;
 using std::endl;
-
+/*
+1.æ‹·è´æ„é€ å‡½æ•° copy constructor,ä¸ºä»€ä¹ˆä¼ é€’å¼•ç”¨? (é¿å…æ— é™é€’å½’,å½¢å‚ä¼ é€’æ˜¯copy value)
+2. string b = a; å½¢å‚ä¼ é€’; éƒ½æ˜¯è°ƒç”¨copy constructor
+(å‡ºç°æ–°å¯¹è±¡,åˆ™è°ƒç”¨çš„æ˜¯~ ; åŒºåˆ«èµ‹å€¼è¿ç®—ç¬¦çš„é‡è½½)
+3. å››ç§é»˜è®¤æˆå‘˜å‡½æ•°
+*/
 class string{
 public:
-	string();
+	string();		
 	string(const char* pstr);
 	string(const string & rhs);
 	string & operator=(const string & rhs);
@@ -22,14 +27,14 @@ string::string()
 	cout<< "string()"<<endl;
 }
 
-string::string(const char* pstr)             //´ø²ÎÊıµÄ¹¹Ôìº¯Êı³õÊ¼»¯
+string::string(const char* pstr)             //å¸¦å‚æ•°çš„æ„é€ å‡½æ•°åˆå§‹åŒ–
 :_pstr(new char [strlen(pstr)+1])
 {
 	cout<< "string(const char* pstr)"<<endl;
 	strcpy(_pstr,pstr);
 }
 
-string::string(const string & rhs)       //¸´ÖÆ¹¹Ôìº¯Êı  ¶ÔÏóµÄ¸´ÖÆ
+string::string(const string & rhs)       //copy constructor,æ‹·è´æ„é€ å‡½æ•°
 :_pstr(new char [strlen(rhs._pstr)+1])
 {
 	cout<< "string(const string & rhs)"<<endl;
@@ -40,17 +45,17 @@ string::string(const string & rhs)       //¸´ÖÆ¹¹Ôìº¯Êı  ¶ÔÏóµÄ¸´ÖÆ
 string & string::operator=(const string & rhs)
 {
 	cout<< "string & operator=(const string & rhs)"<<endl;
-	_pstr=new char [strlen(rhs._pstr)+1];    //³õÊ¼»¯±í´ïÊ½Ö»ÄÜÓÃÓÚ¹¹Ôìº¯Êı³õÊ¼»¯³ÉÔ±±äÁ¿
-	strcpy(_pstr,rhs._pstr);                  //strcpyh»á²¹¼Ó'\0'
+	_pstr=new char [strlen(rhs._pstr)+1];    //åˆå§‹åŒ–è¡¨è¾¾å¼åªèƒ½ç”¨äºæ„é€ å‡½æ•°åˆå§‹åŒ–æˆå‘˜å˜é‡
+	strcpy(_pstr,rhs._pstr);                  //strcpyhä¼šè¡¥åŠ '\0'
 }
 #endif
 
-string & string::operator=(const string & rhs)
+string & string::operator=(const string & rhs)	//assignment,èµ‹å€¼å‡½æ•°(å‰æ: å·¦å€¼å¯¹è±¡å·²ç»å­˜åœ¨)
 {
-	if(this != &rhs) //1. ¿¼ÂÇ×Ô¸´ÖÆ
+	if(this != &rhs) //1. è€ƒè™‘è‡ªå¤åˆ¶
 	{
-		delete [] _pstr;//2. »ØÊÕ×ó²Ù×÷ÊıµÄ¿Õ¼ä,·½±ãÖØĞÂ¶¨Òå¿Õ¼ä´óĞ¡
-		_pstr = new char[strlen(rhs._pstr) + 1]();//3. ÔÙÈ¥½øĞĞÉî¿½±´
+		delete [] _pstr;//2. å›æ”¶å·¦æ“ä½œæ•°çš„ç©ºé—´,æ–¹ä¾¿é‡æ–°å®šä¹‰ç©ºé—´å¤§å°
+		_pstr = new char[strlen(rhs._pstr) + 1]();//3. å†å»è¿›è¡Œæ·±æ‹·è´
 		strcpy(_pstr, rhs._pstr);
 	}
 	return *this;
@@ -60,7 +65,7 @@ string & string::operator=(const string & rhs)
 string::~string()
 {
 	delete  _pstr;
-	_pstr=NULL;                            //±ÜÃâ³öÏÖÒ°Ö¸Õë
+	_pstr=NULL;                            //é¿å…å‡ºç°é‡æŒ‡é’ˆ
 	cout<<"~string() ok"<<endl;
 }
 
@@ -71,18 +76,18 @@ void string::print(){
 int main(int argc,char** argv)
 {
 	string str1;
-	str1.print();                        //ÎŞ²ÎÊıµÄ¹¹Ôìº¯Êı
+	str1.print();                        //æ— å‚æ•°çš„æ„é€ å‡½æ•°
 	
-	string str2 = "Hello";    
-	string str3("world");                //´ø²ÎÊıµÄ¹¹Ôìº¯Êı
+	string str2 = "Hello";    			 //string(const char* pstr)
+	string str3("world");                //å¸¦å‚æ•°çš„æ„é€ å‡½æ•°,string(const char* pstr)
 	
 	str2.print();		
 	str3.print();	
 	
-	string str4 = str3;    // Éî¿½±´¸´ÖÆ¹¹Ôìº¯Êı     ÀàÃû(const ÀàÃû & rhs)
+	string str4 = str3;    //æ‹·è´æ„é€ å‡½æ•°,string(const string & rhs);
 	str4.print();
 	
-	str4 = str2;     //ÔËËã·ûµÄÖØÔØ        ÀàÃû & operator=(const ÀàÃû & rhs)
+	str4 = str2;     //èµ‹å€¼è¿ç®—ç¬¦é‡è½½(å‰æ: å·¦å€¼å¯¹è±¡str4å·²ç»å­˜åœ¨)
 	str4.print();
 	
 	return 0;
