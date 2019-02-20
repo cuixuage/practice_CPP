@@ -1,5 +1,5 @@
 
-//Ìí¼Ó  ÒÆ¶¯ÓïÒåµÄ¹¹Ôìº¯Êı¡¢¸³Öµº¯Êı    ÓÒÖµÒıÓÃ&&
+//æ·»åŠ   ç§»åŠ¨è¯­ä¹‰çš„æ„é€ å‡½æ•°ã€èµ‹å€¼å‡½æ•°    å³å€¼å¼•ç”¨&&
 
 #include <iostream>
 #include <string.h>
@@ -17,16 +17,16 @@ public:
 	String &operator=(const String &);
 	String &operator=(const char *);
 	
-	//ÓÒÖµÒıÓÃ 
-    String(String &&rhs);             //ÒÆ¶¯ÓïÒåµÄ¹¹Ôìº¯Êı
-    String & operator=(String &&rhs); //ÒÆ¶¯ÓïÒåµÄoperator=¸³ÖµÓïÒå
+	//å³å€¼å¼•ç”¨ 
+    String(String &&rhs);             //ç§»åŠ¨è¯­ä¹‰çš„æ„é€ å‡½æ•°
+    String & operator=(String &&rhs); //ç§»åŠ¨è¯­ä¹‰çš„operator=èµ‹å€¼è¯­ä¹‰
    
    
 	String &operator+=(const String &);
 	String &operator+=(const char *);
 
 	char &operator[](std::size_t index);
-	const char &operator[](std::size_t index) const;          //const¶ÔÏóÖ»ÄÜµ÷ÓÃconst³ÉÔ±º¯Êı;ÆÕÍ¨¶ÔÏó¾ùÄÜµ÷ÓÃ
+	const char &operator[](std::size_t index) const;          //constå¯¹è±¡åªèƒ½è°ƒç”¨constæˆå‘˜å‡½æ•°;æ™®é€šå¯¹è±¡å‡èƒ½è°ƒç”¨
 
 	std::size_t size() const;
 	const char* c_str() const;
@@ -68,12 +68,12 @@ String::String(const String & rhs)
 	cout<< "String (const Sting &)"<<endl;
 	strcpy(_pstr,rhs._pstr);
 }
-//*********************************************ÁÙÊ±¶ÔÏóÓÒÖµÒıÓÃ&&  
+//*********************************************ä¸´æ—¶å¯¹è±¡å³å€¼å¼•ç”¨&&  
 String::String(String && rhs)
 :_pstr(rhs._pstr)
 {
 	cout << "Sting(Sting && rhs)" <<endl;
-	rhs._pstr = NULL;            //ÓÒÖµrhs×Ô¶¯ÊÍ·ÅÊ±
+	rhs._pstr = NULL;            //å³å€¼rhsè‡ªåŠ¨é‡Šæ”¾æ—¶
 }
 
 String & String::operator=(String && rhs){
@@ -91,7 +91,7 @@ String::~String(){
 }
 
 String & String::operator=(const String &rhs){
-	if(this != &rhs){        //±ÜÃâ×Ô¸´ÖÆÎÊÌâ ×óÓÒ¾ùÎªÖ¸Õë
+	if(this != &rhs){        //é¿å…è‡ªå¤åˆ¶é—®é¢˜ å·¦å³å‡ä¸ºæŒ‡é’ˆ
 		delete [] _pstr;
 		_pstr=new char [strlen(rhs._pstr)+1];
 		strcpy(_pstr,rhs._pstr);
@@ -100,7 +100,7 @@ String & String::operator=(const String &rhs){
 }
 	
 String & String::operator=(const char * pstr){
-	if(!strcmp(this->_pstr,pstr)){         //ÅĞ¶Ï×Ö·û´®ÄÚÈİÊÇ·ñÏàÍ¬;pstrÔÚÎÄ×Ö³£Á¿Çø,_pstrÔÚÕ»Çø,Ê×µØÖ·¿Ï¶¨²»ÏàÍ¬
+	if(!strcmp(this->_pstr,pstr)){         //åˆ¤æ–­å­—ç¬¦ä¸²å†…å®¹æ˜¯å¦ç›¸åŒ;pstråœ¨æ–‡å­—å¸¸é‡åŒº,_pstråœ¨æ ˆåŒº,é¦–åœ°å€è‚¯å®šä¸ç›¸åŒ
 		cout << "operator = (const char *)" <<endl;
 		delete [] _pstr;
 		_pstr=new char [strlen(pstr)+1];
@@ -139,10 +139,10 @@ char & String::operator[](std::size_t index){
 		return _pstr[index];
 	}
 	return nullchar;
-	//return '\0';     //ÒıÓÃ²»Òª·µ»Ø¾Ö²¿±äÁ¿
+	//return '\0';     //å¼•ç”¨ä¸è¦è¿”å›å±€éƒ¨å˜é‡
 }
 
-const char & String::operator[](std::size_t index) const{          //const¶ÔÏóÖ»ÄÜµ÷ÓÃconst³ÉÔ±º¯Êı;ÆÕÍ¨¶ÔÏó¾ùÄÜµ÷ÓÃ
+const char & String::operator[](std::size_t index) const{          //constå¯¹è±¡åªèƒ½è°ƒç”¨constæˆå‘˜å‡½æ•°;æ™®é€šå¯¹è±¡å‡èƒ½è°ƒç”¨
 	static char nullchar = '\0';
 	if(index>=0 && index<strlen(_pstr)){
 		return _pstr[index];
@@ -156,10 +156,10 @@ std::size_t String::size() const{
 }
 
 const char* String::c_str() const{
-	return _pstr;                    //·µ»Øchar* 
+	return _pstr;                    //è¿”å›char* 
 }
 
-//AÀàµÄÓÑÔªº¯Êı ÄÜÖ±½Ó·ÃÎÊAÀàµÄprivate³ÉÔ±±äÁ¿
+//Aç±»çš„å‹å…ƒå‡½æ•° èƒ½ç›´æ¥è®¿é—®Aç±»çš„privateæˆå‘˜å˜é‡
 
 bool operator==(const String &left, const String &right){
 	return !strcmp(left._pstr,right._pstr);
@@ -185,7 +185,7 @@ bool operator>=(const String &left, const String &right){
 	return strcmp(left._pstr,right._pstr)>=0?true:false;
 }
 
-std::ostream &operator<<(std::ostream &os, const String &rhs){       //¶ÔÓÚStringÀà Êä³öÁ÷ÖØÔØ
+std::ostream &operator<<(std::ostream &os, const String &rhs){       //å¯¹äºStringç±» è¾“å‡ºæµé‡è½½
 	os << rhs._pstr;
 	return os;
 }
@@ -203,33 +203,33 @@ std::istream &operator>>(std::istream &is, String &rhs){
 	String operator+(const char *, const String &);
 String operator+(const String &left, const String &right){   //String += String
 	String temp1(left);
-	String temp2(right);    //³õÊ¼»¯Á½¸öÊµÀı
+	String temp2(right);    //åˆå§‹åŒ–ä¸¤ä¸ªå®ä¾‹
 	temp1 +=temp2;
-	return temp1;           //·µ»ØString ¶ÔÏó
+	return temp1;           //è¿”å›String å¯¹è±¡
 }
 String operator+(const String &left, const char *right){    //String += char*
 	String temp1(left);
 	//String temp2(right);    
 	temp1 +=right;
-	return temp1;           //·µ»ØString ¶ÔÏó
+	return temp1;           //è¿”å›String å¯¹è±¡
 }
-String operator+(const char *left, const String &right){     //ÒªÇó leftÔÚÇ°
+String operator+(const char *left, const String &right){     //è¦æ±‚ leftåœ¨å‰
 	String temp1(left);
 	String temp2(right);    
 	temp1 +=temp2;
-	return temp1;           //·µ»ØString ¶ÔÏó
+	return temp1;           //è¿”å›String å¯¹è±¡
 }	
 	
 int main(int argc,char ** argv){
 
-	//±àÒëÆ÷Ö»¶ÔÓÒÖµÒıÓÃ²ÅÄÜµ÷ÓÃ×ªÒÆ¹¹Ôìº¯ÊıºÍ×ªÒÆ¸³Öµº¯Êı
-	//********************** ÓÒÖµÒıÓÃ&&²âÊÔ
-	String str15 ("hello");             //¹¹Ôìº¯Êı(const char *)
+	//ç¼–è¯‘å™¨åªå¯¹å³å€¼å¼•ç”¨æ‰èƒ½è°ƒç”¨è½¬ç§»æ„é€ å‡½æ•°å’Œè½¬ç§»èµ‹å€¼å‡½æ•°
+	//********************** å³å€¼å¼•ç”¨&&æµ‹è¯•
+	String str15 ("hello");             //æ„é€ å‡½æ•°(const char *)
 	String str16 ("world");
-	String str17(std::move(str15));     //ÓÒÖµ¹¹Ôìº¯Êı
+	String str17(std::move(str15));     //å³å€¼æ„é€ å‡½æ•°
 	cout<<str17<<endl;
 	cout<<"---------------------"<<endl;
-	str15 = std::move(str16);            //ÓÒÖµ¸³Öµº¯Êı
+	str15 = std::move(str16);            //å³å€¼èµ‹å€¼å‡½æ•°
 	cout<<str15<<endl;
 	
 	return 0;

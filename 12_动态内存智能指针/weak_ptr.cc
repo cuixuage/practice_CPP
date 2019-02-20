@@ -38,7 +38,7 @@ int main(void)
 		cout << "提升失败，该对象已被销毁!" << endl;
 	}
 	
-	shared_ptr<X> sp3 = wp.lock();								//lock不影响weak_ptr本身的存在
+	shared_ptr<X> sp3 = wp.lock();								//lock不影响weak_ptr本身的存在  仍然成功
 	if(sp3)
 	{
 		cout << "提升成功"<< endl;

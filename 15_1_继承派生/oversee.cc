@@ -23,7 +23,7 @@ public:
 	}
 
 	virtual void func(int x)
-	{	
+	{
 		cout << "B::func(int) x " << x << endl;
 	}
 
@@ -32,12 +32,11 @@ public:
 int main(void)
 {
 	B b;
-	//b.func(10);//error
-	b.func("hello");
-	b.func(10);//调用方式是对象，发生的是隐藏
+	b.func("hello");   //overload
+	b.func(10);     //oversee
 
-	A * p = new B;
-	p->func(10);//覆盖
+	A * a = new B;
+	a->func(10);    //多态 override
 
 	return 0;
 }
@@ -59,9 +58,11 @@ void fun(double,double);
 2.override
 派生类中覆盖基类中的同名函数，要求两个函数的参数个数、参数类型、返回类型都相同，且基类函数必须是虚函数
 
-3.oversea
+3.oversee
 隐藏指的是在某些情况下，派生类中的函数屏蔽了基类中的同名函数，这些情况包括：
 2个函数参数相同，但基类函数不是虚函数。和覆盖的区别在于基类函数是否是虚函数。
 2个函数参数不同，无论基类函数是否是虚函数，基类函数都会被屏蔽
+==>
+派生类 和基类重名的函数,在派生类中被隐藏(虚函数除外,尽管也是重名的)
 
 */

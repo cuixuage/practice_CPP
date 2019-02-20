@@ -81,7 +81,7 @@ int test1()
 }
 
 int test2()
-{//误用3: 函数的返回值是一个原生裸指针 
+{//误用3: 函数的返回值是一个原生裸指针
 	shared_ptr<Point> sp1(new Point(1, 2));
 	shared_ptr<Point> sp2(new Point(3, 4));
 
@@ -89,14 +89,16 @@ int test2()
 
 	cout << *sp1 << endl;
 	cout << *sp3 << endl;
+	cout<<sp1.use_count()<<endl;        //sp3被sp1初始化 count=2
+	cout<<sp3.use_count()<<endl;
 	return 0;
 }
 
 
 int main(void)
 {
-	//test0();
-	//test1();
-	test2();
+//	test0();
+	test1();
+//	test2();
 	return 0;
 }

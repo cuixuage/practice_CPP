@@ -1,62 +1,53 @@
 #include <iostream>
 #include <memory>
-#include <vector>
 using std::cout;
 using std::endl;
-using std::unique_ptr;
-using std::vector;
+using std::shared_ptr;
+using std::weak_ptr;
 
-class Point
+
+class X
 {
 public:
-	Point(int ix = 0, int iy = 0)
-	: _ix(ix)
-	, _iy(iy)
-	{
-		cout << "Point(int,int)"
-			 << endl;
-	}
+	X(){	cout << "X()" << endl;	} 
+	~X(){	cout << "~X()" << endl;	}
 
-	friend std::ostream & operator<<(std::ostream & os, const Point & rhs);
-
-	~Point()
-	{
-		cout << "~Point()" << endl;
-	}
-
-private:
-	int _ix;
-	int _iy;
+	void func()
+	{	cout << "X::func()" << endl;	}
 };
-
-std::ostream & operator<<(std::ostream & os, const Point & rhs)
-{
-	os << "(" << rhs._ix
-	   << "," << rhs._iy
-	   << ")";
-	return os;
-}
-
-unique_ptr<int> getValue()        //Êµ¼Êµ÷ÓÃÊ±  1.·µ»ØÓÒÖµÁÙÊ±¶ÔÏó  ÒòÎªupi×÷ÓÃÓòÖ»ÊÇ±¾º¯ÊıÖ®ÄÚ   2.ÒÆ¶¯ÓïÒå ¿ÉÒÔ±»unique_ptrÊ¹ÓÃ
-{
-	unique_ptr<int> upi(new int(88));
-	return upi;
-}
-
 
 int main(void)
 {
-	unique_ptr<int> upi(new int(66));
-	cout << "*upi = " << *upi << endl;
-	unique_ptr<Point> pt(new Point(1, 2));
-	cout << "*pt =" << *pt << endl;
+	shared_ptr<X> sp(new X);																
+	cout << "sp 's use_count = " << sp.use_count() << endl;		//use_countè¿”å›share_ptrå¼•ç”¨è®¡æ•°
 
-	//unique_ptr<Point> pt2 = pt;						//²»ÄÜÖ´ĞĞ¸´ÖÆ²Ù×÷,unique_ptrÊÇ¶ÀÏíĞÍÖÇÄÜÖ¸Õë
+	weak_ptr<X> wp;												//ä½¿ç”¨shared_ptråˆå§‹åŒ– weak_ptr<X> wp(sp);
+	wp = sp;													//å¼±å…±äº«ä¸ä¼šæ”¹å˜share_ptrå¼•ç”¨è®¡æ•°
+	
+	cout << "sp 's use_count = " << sp.use_count() << endl;
 
-														//ÔÊĞí¿½±´»ò¸³ÖµÒ»¸ö½«Òª±»Ïú»ÙµÄunique_ptr  ÀıÈç:·µ»Øº¯ÊıÄÚ²¿¾Ö²¿±äÁ¿unique_ptr
-	unique_ptr<int> upi2 = getValue();
-	cout << "*upi2 = " << *upi2 << endl;
-
+	shared_ptr<X> sp2 = wp.lock();								//wp.lockå‡½æ•°æ£€æµ‹weak_ptræŒ‡å‘çš„å¯¹è±¡æ˜¯å¦å­˜åœ¨,
+																//å­˜åœ¨,åˆ™è¿”å›æŒ‡å‘å…±äº«å¯¹è±¡çš„share_ptr
+	if(sp2)
+	{
+		cout << "æå‡æˆåŠŸ"<< endl;
+		sp2->func();
+	}
+	else
+	{
+		cout << "æå‡å¤±è´¥ï¼Œè¯¥å¯¹è±¡å·²è¢«é”€æ¯!" << endl;
+	}
+	
+	shared_ptr<X> sp3 = wp.lock();								//lockä¸å½±å“weak_ptræœ¬èº«çš„å­˜åœ¨  ä»ç„¶æˆåŠŸ
+	if(sp3)
+	{
+		cout << "æå‡æˆåŠŸ"<< endl;
+		sp3->func();
+	}
+	else
+	{
+		cout << "æå‡å¤±è´¥ï¼Œè¯¥å¯¹è±¡å·²è¢«é”€æ¯!" << endl;
+	}
 
 	return 0;
 }
