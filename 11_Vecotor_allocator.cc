@@ -1,8 +1,8 @@
 
-//allocator ¼òµ¥ÊµÏÖ×Ô¶¨ÒåVectorÄ£°æ
-//ÊìÏ¤ static: allocate¡¢deallocate    ¹ÊÄ£°åÀàallocator¶ÔÏóĞèÒª¾²Ì¬ÉùÃ÷
-//     construct¡¢destroy(c++17·ÏÆú)
-//ºóÆÚ: Ñ§Ï°ÕæÕıµÄ ÄÚ²¿ÊµÏÖ AllocÄ£°åÀà  ¶ş¼¶¿Õ¼ä·ÖÅäÆ÷
+//allocator ç®€å•å®ç°è‡ªå®šä¹‰Vectoræ¨¡ç‰ˆ
+//ç†Ÿæ‚‰ static: allocateã€deallocate (å†…éƒ¨å®šä¹‰ä¸ºé™æ€çš„æˆå‘˜å‡½æ•°)   æ‰€ä»¥allocatorå¯¹è±¡éœ€è¦é™æ€å£°æ˜
+//     constructã€destroy(c++17åºŸå¼ƒ)
+//åæœŸ: å­¦ä¹ çœŸæ­£çš„ å†…éƒ¨å®ç° Allocæ¨¡æ¿ç±»  äºŒçº§ç©ºé—´åˆ†é…å™¨
 
 
 #include <iostream>
@@ -26,10 +26,10 @@ public:
 	}
 
 private:
-	void reallocate();   //push_backÊ±¼ì²â size() == capacity()£¿
+	void reallocate();   //push_backæ—¶æ£€æµ‹ size() == capacity()ï¼Ÿ
 
 private:
-	static std::allocator<T> _alloc;   //¿Õ¼ä·ÖÅä½Ó¿Ú²ãµÄ¾²Ì¬¶ÔÏó
+	static std::allocator<T> _alloc;   //ç©ºé—´åˆ†é…æ¥å£å±‚çš„é™æ€å¯¹è±¡
 	T * _elems;
 	T * _firstFree;
 	T * _end;
@@ -57,7 +57,7 @@ template <typename T>
 void Vector<T>::push_back(const T & value){
 	if( size() == capacity() )
 		reallocate();
-	_alloc.construct(_firstFree++ , value);     //ÔªËØµÄÌí¼Ó Êµ¼Êµ÷ÓÃ¶¨Î»±í´ïÊ½new((void*)Pointer)T(value)
+	_alloc.construct(_firstFree++ , value);     //å…ƒç´ çš„æ·»åŠ  å®é™…è°ƒç”¨å®šä½è¡¨è¾¾å¼new((void*)Pointer)T(value)
 }
 
 template <typename T>
@@ -76,18 +76,18 @@ template <typename T>
 void Vector<T>::reallocate(){
 	int oldcapacity = capacity();
 	int newcapacity = (oldcapacity == 0 ? 1 : oldcapacity * 2);
-	//1.·ÖÅäĞÂ¿Õ¼ä
+	//1.åˆ†é…æ–°ç©ºé—´
 	T * newelems = _alloc.allocate(newcapacity);
 	if(_elems){
-		//2.Ô­Ê¼¿Õ¼ä  uninitialized_copy( InputIt first, InputIt last, ForwardIt d_first );
+		//2.åŸå§‹ç©ºé—´  uninitialized_copy( InputIt first, InputIt last, ForwardIt d_first );
 		std::uninitialized_copy(_elems,_firstFree,newelems);
-		//3.Ïú»ÙÔ­¿Õ¼ä¶ÔÏó
+		//3.é”€æ¯åŸç©ºé—´å¯¹è±¡
 		while(_elems != _firstFree)
 			_alloc.destroy( --_firstFree);
-		//4.Ïú»ÙÔ­¿Õ¼ä
+		//4.é”€æ¯åŸç©ºé—´
 		_alloc.deallocate(_elems,oldcapacity);
 	}
-	//5.¸üĞÂÎªĞÂ¿Õ¼ä   ÔÚifÓï¾äÍâ²à
+	//5.æ›´æ–°ä¸ºæ–°ç©ºé—´   åœ¨ifè¯­å¥å¤–ä¾§
 	_elems = newelems;
 	_firstFree = newelems + oldcapacity;
 	_end = newelems + newcapacity;
@@ -95,7 +95,7 @@ void Vector<T>::reallocate(){
 }
 
 template <typename T>
-std::allocator<T> Vector<T>:: _alloc;    //static ¶ÔÏóÀàÍâ³õÊ¼»¯
+std::allocator<T> Vector<T>:: _alloc;    //static å¯¹è±¡ç±»å¤–åˆå§‹åŒ–
 
 void display(const Vector<int> & vec)
 {
@@ -144,26 +144,26 @@ int main(void)
 }
 
 /*
-    VectorÄ£ĞÍ
+    Vectoræ¨¡å‹
      ______________________________
     |_|_|_|_|_|____________________|
-     ¡ü         ¡ü                    ¡ü
+     â†‘         â†‘                    â†‘
    _elems   _first_free            _end
    
            
-    T * _elems;      //Ö¸ÏòÊı×éÖĞµÄµÚÒ»¸öÔªËØ
-    T * _first_free; //Ö¸Ïò×îºóÒ»¸öÊµ¼ÊÔªËØÖ®ºóµÄÄÇ¸öÔªËØ
-    T * _end;        //Ö¸ÏòÊı×é±¾ÉíÖ®ºóµÄÎ»ÖÃ
+    T * _elems;      //æŒ‡å‘æ•°ç»„ä¸­çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
+    T * _first_free; //æŒ‡å‘æœ€åä¸€ä¸ªå®é™…å…ƒç´ ä¹‹åçš„é‚£ä¸ªå…ƒç´ 
+    T * _end;        //æŒ‡å‘æ•°ç»„æœ¬èº«ä¹‹åçš„ä½ç½®
 */
 
 
-/*******************************************************allocator stlÔ´Âë
-STL¿Õ¼ä·ÖÅä½Ó¿Ú²ã ¡ª¡ª Ä£°åÀàallocator ¡ª¡ª ¶¨Òå
+/*******************************************************allocator stlæºç 
+STLç©ºé—´åˆ†é…æ¥å£å±‚ â€”â€” æ¨¡æ¿ç±»allocator â€”â€” å®šä¹‰
 
-	1. ×¢:_Tp* allocate(size_type __n)     void deallocate(pointer __p, size_type __n) ÊÇÊµÏÖ²ãallocµÄ¾²Ì¬³ÉÔ±º¯Êı
-		¹ÊÄ£°åÀàallocator¶ÔÏóĞèÒª¾²Ì¬ÉùÃ÷
+	1. æ³¨:_Tp* allocate(size_type __n)     void deallocate(pointer __p, size_type __n) æ˜¯å®ç°å±‚allocçš„é™æ€æˆå‘˜å‡½æ•°
+		æ•…æ¨¡æ¿ç±»allocatorå¯¹è±¡éœ€è¦é™æ€å£°æ˜
 		
-	2. typedef alloc _Alloc;   allocÀàÊÇ¿Õ¼ä·ÖÅäµÄÊµÏÖ
+	2. typedef alloc _Alloc;   allocç±»æ˜¯ç©ºé—´åˆ†é…çš„å®ç°
 
 
 template <class _Tp>
