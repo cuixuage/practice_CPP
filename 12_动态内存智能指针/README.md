@@ -1,36 +1,41 @@
-** ʹ�ö�̬�ڴ�ĳ���Ŀ��**  
+** 使用动态内存的常见目的**  
 1.  
-**����ָ��Ҳ��ָ��**  
-+�����������֮��Ĺ����ײ�����   
-��ĳ�����󱻿���ʱ,���ǲ��ط���ԭ����\��������;��������ʱ������Ա��� 
+**智能指针也是指针**  
++允许多个对象之间的共享底层数据   
+当某个对象被拷贝时,我们不必分离原数据\副本数据;或者销毁时必须加以保留 
   
-**����**  
-sp��use_count ���ü���  
-up:���� ����Ȩת��  
-wp: lock����Ϊsp    
+**区别**  
+sp：use_count 引用计数  
+up:独享 所有权转移  
+wp: lock提升为sp    
  
-shared_ptr  unique_ptr ����ʹ��new��ʼ�� ��Ϊ����ָ��Ĭ��ʹ��delete�ͷ��������Ķ���  
-weak_ptrʹ��shared_ptr��ʼ��  
+shared_ptr  unique_ptr 往往使用new初始化 因为智能指针默认使用delete释放所关联的对象  
+weak_ptr使用shared_ptr初始化  
 
-**�ŵ�**  
-��ʱ��ĳ�����ڲ��������쳣δ������,���³�����ǰ����,����ָ��ָ����ڴ����Ȼ����ȷ�ͷ�  
-**����ָ������**  
+**优点**  
+及时在某函数内部发生的异常未被捕获,导致程序提前结束,智能指针指向的内存块任然能正确释放  
+**智能指针陷阱**  
 primer P417 
 
+update:     
+1.shared_ptr等智能指针调用析构函数时依旧是delete，而非delete []. 所以不能管理对象数组    
+2.weak_ptr的目的主要是避免shared_ptr的循环引用问题。   
+详见:https://zh.cppreference.com/w/cpp/memory/weak_ptr    
+
 2.  
-**allocatorģ����**  
-Ŀ��: �����ڴ����ͳ�ʼ������ �����Զ���ĳ�ʼ��  
-ʵ��:  
-allocator ��ʵ���Զ���Vectorģ��  
-��Ϥ:  
-ģ���� static std::allocator<T> alloc; ��Ҫ��̬����  
-static: allocate(n)��deallocate(p,n)  �ڴ�ķ�����ͷ�       
-static: construct(p,args)��destroy(p)  �����������ɾ��  
-����:  
+**allocator模板类**  
+目的: 分离内存分配和初始化工作 可以自定义的初始化  
+实例:  
+allocator 简单实现自定义Vector模版  
+熟悉:  
+模板类 static std::allocator<T> alloc; 需要静态声明  
+static: allocate(n)、deallocate(p,n)  内存的分配和释放       
+static: construct(p,args)、destroy(p)  对象的添加与删除  
+核心:  
 reallcote   
-1.�Զ����ڴ治��ʱ�����·������Ŀռ�  
-2.��ԭ�ռ�����ƶ�move ���¿ռ�(����copy) | ����ֱ��ʹ��uninitialized_copy  
-3.�ͷ�ԭ�ռ���Դ  
+1.自定义内存不足时，重新分配更大的空间  
+2.将原空间对象移动move 到新空间(而非copy) | 或者直接使用uninitialized_copy  
+3.释放原空间资源  
 
 
 
