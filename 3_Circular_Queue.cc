@@ -1,6 +1,6 @@
-//Ñ­»·¶ÓÁĞ±ÜÃâµ¥Ïò¶ÓÁĞµÄ¼ÙÒç³ö
-// frontÖ¸Ïò¶ÓÊ×ÔªËØ£¬rearÖ¸Ïò¶ÓÎ²ÔªËØµÄÏÂÒ»¸öÔªËØ
-//ÉÙÓÃÒ»¸öÔªËØ¿Õ¼ä£¬Ô¼¶¨  ¶Ó¿ÕÊ±£º front==rear  ¶ÓÂúÊ±£º (rear+1)%maxsize==front
+//å¾ªç¯é˜Ÿåˆ—é¿å…å•å‘é˜Ÿåˆ—çš„å‡æº¢å‡º
+// frontæŒ‡å‘é˜Ÿé¦–å…ƒç´ ï¼ŒrearæŒ‡å‘é˜Ÿå°¾å…ƒç´ çš„ä¸‹ä¸€ä¸ªå…ƒç´ 
+//å°‘ç”¨ä¸€ä¸ªå…ƒç´ ç©ºé—´ï¼Œçº¦å®š  é˜Ÿç©ºæ—¶ï¼š front==rear  é˜Ÿæ»¡æ—¶ï¼š (rear+1)%maxsize==front
 
 #include <iostream>       
 using std::cout;
@@ -12,17 +12,17 @@ private:
 	unsigned int size;
 	int* member;
 	unsigned int _front;
-	unsigned int rear;
+	unsigned int rear;	//æœ«å°¾å…ƒç´ çš„index
 public:
 	queue();
 	~queue();
 	void push(int);
-    void pop();
-    int front();
-    int back();
-    bool empty();
+	void pop();
+	int front();
+	int back();
+	bool empty();
 	bool full();
-	
+
 	int getrear();
 	int get_front();
 };
@@ -55,12 +55,12 @@ int queue::front(){
 }
 
 int queue::back(){
-	//if(rear!=_front) return member[rear-1];     //error ¿¼ÂÇÔªËØ²»¶Ïpop,pushºó£¬rear==0Ê±,rear-1³ÉÎª¸ºÊı
-	/*if(rear!=_front){    //ÔªËØ²»Îª¿Õ
+	//if(rear!=_front) return member[rear-1];     //error è€ƒè™‘å…ƒç´ ä¸æ–­pop,pushåï¼Œrear==0æ—¶,rear-1æˆä¸ºè´Ÿæ•°
+	/*if(rear!=_front){    //å…ƒç´ ä¸ä¸ºç©º
 		if(rear==0) return member[MaxSize-1];
 		else return member[rear-1];
 	}*/
-	if(rear!=_front) return member[(rear-1+MaxSize)%MaxSize];         //¸ü¼ÓÓÅÑÅ
+	if(rear!=_front) return member[(rear-1+MaxSize)%MaxSize];         //æ›´åŠ ä¼˜é›…
 }
 
 bool queue::empty(){
@@ -92,7 +92,7 @@ int main(int argc,char** argv){
 	que.push(15);
 	que.push(16);
 	que.push(17);
-	que.push(18);    //´ËÊ±Âú¶ÓÁĞ
+	que.push(18);    //æ­¤æ—¶æ»¡é˜Ÿåˆ—
 	 
 	cout<<"full?"<<que.full()<<endl;
 	cout<<"front="<<que.front()<<endl;
