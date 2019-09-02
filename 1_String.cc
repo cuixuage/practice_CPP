@@ -3,11 +3,20 @@
 using std::cout;
 using std::endl;
 /*
+构造函数:
 1.拷贝构造函数 copy constructor,为什么传递引用? (避免无限递归,形参传递是copy value)
-1.2 构造函数是没有返回值的  ;  但是重载operator= 是有返回值的(对左值的重新赋值)
-2. string b = a; 形参传递; 都是调用copy constructor
+2.构造函数是没有返回值的  ;  但是重载operator= 是有返回值的(对左值的重新赋值)
+3.string b = a; 形参传递; 但是调用copy constructor
 (出现新对象,则调用的是~ ; 区别赋值运算符的重载)
-3. 四种默认成员函数
+4.四种默认成员函数
+
+
+重载operator:
+String& operator=(const string& rhs)  
+1.返回参数是引用?  目的:连续赋值,减少一次构造和析构   
+2.if(this==rhs) 目的:避免自赋值,因为赋值之前需要delete原始空间
+3.delete [] _val;
+4.开辟空间再拷贝
 */
 class string{
 public:
