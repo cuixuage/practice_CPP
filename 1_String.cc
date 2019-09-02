@@ -8,7 +8,7 @@ using std::endl;
 2.构造函数是没有返回值的  ;  但是重载operator= 是有返回值的(对左值的重新赋值)
 3.string b = a; 形参传递; 但是调用copy constructor
 (出现新对象,则调用的是~ ; 区别赋值运算符的重载)
-4.四种默认成员函数
+4.六种默认成员函数(默认构造,拷贝构造,operator=重载,析构函数,operator&重载,const operator&()const重载)
 
 
 重载operator:
